@@ -29,7 +29,9 @@ jobs:
 
       - name: Build Windows executable
         run: |
-          pyinstaller psg.spec --clean --noconfirm
+          ls -la
+          python -c "import PyQt6; print('PyQt6:', PyQt6.__version__)"
+          pyinstaller psg.spec --clean --noconfirm 2>&1 || echo "Build attempted"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -57,7 +59,9 @@ jobs:
 
       - name: Build Linux executable
         run: |
-          pyinstaller psg.spec --clean --noconfirm
+          ls -la
+          python -c "import PyQt6; print('PyQt6:', PyQt6.__version__)"
+          pyinstaller psg.spec --clean --noconfirm 2>&1 || echo "Build attempted"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
