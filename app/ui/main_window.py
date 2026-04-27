@@ -230,6 +230,7 @@ class MainWindow(QMainWindow):
                 ("Safety Summary", "safety_summary"),
                 ("Compliance Report", "compliance_report"),
                 ("Export Data", "export_data"),
+                ("CSV Import", "csv_import"),
             ]),
             ("Settings", "settings", []),
         ]
@@ -270,6 +271,7 @@ class MainWindow(QMainWindow):
             "training_logs", "expiring_training", "expired_training",
             "all_audits", "pending_audits", "follow_ups",
             "employees", "safety_summary", "compliance_report", "export_data",
+            "csv_import",
             "settings"
         ]
         
@@ -283,7 +285,13 @@ class MainWindow(QMainWindow):
         self._central_widget = central_widget
     
     def _create_placeholder_page(self, name: str) -> QWidget:
-        """Create a placeholder page widget."""
+        """Create a page widget - actual view for specific pages, placeholder for others."""
+        # Import the actual view for csv_import
+        if name == "csv_import":
+            from app.ui.csv_import_view import CSVImportView
+            return CSVImportView()
+        
+        # For all other pages, create placeholder
         page = QWidget()
         layout = QVBoxLayout(page)
         
