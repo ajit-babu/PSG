@@ -1,0 +1,6 @@
+incident_id,date,time,location,severity,description,reported_by,email,phone
+INC-001,2026-01-15,08:30,Site A - Floor 3,near_miss,Worker nearly slipped on wet floor,John Smith,john.smith@example.com,+971-50-123-4567
+INC-002,2026-01-16,14:00,Site B - Warehouse,minor,Minor cut from sharp edge,Ahmed Al Muhammed,ahmed@example.com,+971-55-234-5678
+INC-003,2026-01-17,09:15,Site A - Parking,moderate,Vehicle minor collision in parking,Mohammed Rashid,rashid@example.com,+971-50-345-6789
+INC-004,2026-01-18,11:30,Site C - Tower 2,major,Fall from ladder - no serious injury,Ali Hassan,ali.h@example.com,+971-55-456-7890
+INC-005,2026-01-19,16:45,Site B - Storage,critical,Chemical spill - immediate cleanup required,Sarah Johnson,sarah.j@example.com,+971-50-567-8901
