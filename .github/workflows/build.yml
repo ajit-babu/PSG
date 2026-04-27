@@ -27,17 +27,35 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
       - name: Build Windows executable
         run: |
-          ls -la
+          dir
           python -c "import PyQt6; print('PyQt6:', PyQt6.__version__)"
-          pyinstaller psg.spec --clean --noconfirm 2>&1 || echo "Build attempted"
+          pip list
+          pyinstaller psg.spec --clean --noconfirm
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: PSG-Safety-Windows
-          path: dist/PSG-Safety.exe
+          path: dist\PSG-Safety.exe
           retention-days: 30
 
   build-linux:
@@ -61,7 +79,8 @@ jobs:
         run: |
           ls -la
           python -c "import PyQt6; print('PyQt6:', PyQt6.__version__)"
-          pyinstaller psg.spec --clean --noconfirm 2>&1 || echo "Build attempted"
+          pip list
+          pyinstaller psg.spec --clean --noconfirm
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
