@@ -9,37 +9,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+env:
+  PYTHON_VERSION: '3.12'
+
 jobs:
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -e .[dev]
-
-      - name: Build Windows executable
-        run: |
-          dir
-          python -c "import PyQt6; print('PyQt6:', PyQt6.__version__)"
-          pip list
-          pyinstaller psg.spec --clean --noconfirm
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: PSG-Safety-Windows
-          path: dist\\PSG-Safety.exe
-          retention-days: 30
-
   build-linux:
     runs-on: ubuntu-latest
     steps:
@@ -49,7 +22,8 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
 
       - name: Install dependencies
         run: |
@@ -58,16 +32,41 @@ jobs:
 
       - name: Build Linux executable
         run: |
-          ls -la
-          python -c "import PyQt6; print('PyQt6:', PyQt6.__version__)"
-          pip list
           pyinstaller psg.spec --clean --noconfirm
 
-      - name: Upload artifact
+      - name: Upload Linux artifact
         uses: actions/upload-artifact@v4
         with:
           name: PSG-Safety-Linux
           path: dist/PSG-Safety
+          retention-days: 30
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[dev]
+
+      - name: Build Windows executable
+        run: |
+          pyinstaller psg.spec --clean --noconfirm
+
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PSG-Safety-Windows
+          path: dist\PSG-Safety.exe
           retention-days: 30
 
   release:
